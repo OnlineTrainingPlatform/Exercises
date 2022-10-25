@@ -28,7 +28,7 @@ export class User {
 
   public async getExercises(
     request: IGetExercisesRequest,
-    ): Promise<IGetExercisesResponse> {
+  ): Promise<IGetExercisesResponse> {
     return this.getExercisesUseCase.do(request);
   }
 
