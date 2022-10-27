@@ -52,9 +52,9 @@ describe('/exercises/:id', () => {
     expect(response.statusCode).toBe(200);
     expect(payload.exercise).toEqual(exercise);
   }),
-  it('Returns status 400 if no id was given', async() => {
-    const response = await server.inject('/exercises/');
+    it('Returns status 400 if no id was given', async () => {
+      const response = await server.inject('/exercises/');
 
-    expect(response.statusCode).toBe(400);
-  })
+      expect(response.statusCode).toBe(400);
+    });
 });
