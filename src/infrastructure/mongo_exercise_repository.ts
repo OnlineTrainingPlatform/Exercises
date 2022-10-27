@@ -8,7 +8,7 @@ export class MongoExerciseRepository implements IExerciseRepository {
     this.exercises = [
       new Exercise(
         '2ff1b6ba-5823-4551-9827-0d669da4b6fd',
-        'Hello, World!',
+        'Hello, World! Nope',
         'This exrcise will cover...',
         [],
       ),
