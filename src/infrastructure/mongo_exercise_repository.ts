@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import { Exercise, IExerciseRepository } from '../domain';
 
 export class MongoExerciseRepository implements IExerciseRepository {
@@ -25,18 +24,11 @@ export class MongoExerciseRepository implements IExerciseRepository {
     return this.exercises;
   }
 
-  public async getExerciseById(id: string): Promise<Exercise> {
+  public async getExerciseById(id: string): Promise<Exercise | undefined> {
     const exercise = this.exercises.find((value) => {
       return value.id == id;
     });
-    if (exercise === undefined) {
-      Promise.reject('Exercise not found');
-    }
 
-    if (exercise == undefined) {
-      return Promise.reject();
-    } else {
-      return Promise.resolve(exercise);
-    }
+    return Promise.resolve(exercise);
   }
 }

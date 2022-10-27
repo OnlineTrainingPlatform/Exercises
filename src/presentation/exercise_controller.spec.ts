@@ -16,7 +16,7 @@ describe('/exercises', () => {
     const exercise = new Exercise(uuidv4(), 'title', 'description', []);
     const exercises = [exercise];
 
-    repository.getExercises.mockReturnValue(Promise.resolve(exercises));
+    repository.getExercises.mockResolvedValue(exercises);
 
     const response = await server.inject().get('/exercises');
     const payload = JSON.parse(response.payload) as IGetExercisesResponse;
@@ -25,7 +25,16 @@ describe('/exercises', () => {
     expect(payload.exercises).toEqual(exercises);
   }),
     it('Returns status 500 if an error is thrown by the repository', async () => {
-      repository.getExercises.mockReturnValue(Promise.reject());
+      repository.getExercises.mockImplementation(() => {
+        throw new Error();
+      });
+
+      const response = await server.inject().get('/exercises');
+
+      expect(response.statusCode).toBe(500);
+    }),
+    it('Returns status 500 if the repository promise is rejected', async () => {
+      repository.getExercises.mockRejectedValue(undefined);
 
       const response = await server.inject().get('/exercises');
 
@@ -44,7 +53,7 @@ describe('/exercises/:id', () => {
     const id = uuidv4();
     const exercise = new Exercise(id, 'title', 'description', []);
 
-    repository.getExerciseById.mockReturnValue(Promise.resolve(exercise));
+    repository.getExerciseById.mockResolvedValue(exercise);
 
     const response = await server.inject(`/exercises/${id}`);
     const payload = JSON.parse(response.payload) as IGetExerciseResponse;
@@ -52,9 +61,32 @@ describe('/exercises/:id', () => {
     expect(response.statusCode).toBe(200);
     expect(payload.exercise).toEqual(exercise);
   }),
-  it('Returns status 400 if no id was given', async() => {
-    const response = await server.inject('/exercises/');
+    it('Returns status 400 if no id was given', async () => {
+      const response = await server.inject('/exercises/');
 
-    expect(response.statusCode).toBe(400);
-  })
+      expect(response.statusCode).toBe(400);
+    }),
+    it('Returns status 404 if no exercise could be found with the ID', async () => {
+      repository.getExerciseById.mockResolvedValue(undefined);
+
+      const response = await server.inject('/exercises/some-id');
+
+      expect(response.statusCode).toBe(404);
+    }),
+    it('Returns status 500 if repository throws an error', async () => {
+      repository.getExerciseById.mockImplementation((id) => {
+        throw new Error();
+      });
+
+      const response = await server.inject('/exercises/some-id');
+
+      expect(response.statusCode).toBe(500);
+    }),
+    it('Returns status 500 if repository promise was rejected', async () => {
+      repository.getExerciseById.mockRejectedValue(undefined);
+
+      const response = await server.inject('/exercises/some-id');
+
+      expect(response.statusCode).toBe(500);
+    });
 });
