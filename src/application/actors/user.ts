@@ -8,7 +8,6 @@ import {
   IUseCase,
 } from '..';
 import { IExerciseRepository } from '../../domain';
-import { MongoExerciseRepository } from '../../infrastructure';
 
 export class User {
   private readonly getExercisesUseCase: IUseCase<
@@ -20,8 +19,9 @@ export class User {
     IGetExerciseResponse
   >;
 
-  constructor() {
-    const repository: IExerciseRepository = new MongoExerciseRepository();
+  constructor(
+    repository: IExerciseRepository
+  ) {
     this.getExercisesUseCase = new GetExercisesUseCase(repository);
     this.getExerciseUseCase = new GetExerciseUseCase(repository);
   }

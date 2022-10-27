@@ -8,8 +8,14 @@ export async function exerciseController(
   fastify.get(
     '/exercises',
     async (request: FastifyRequest, reply: FastifyReply) => {
-      const user = new User();
-      reply.send(await user.getExercises({}));
+      console.log(opts);
+      const user = new User(opts.exerciseRepository);
+      await user.getExercises({})
+        .catch((error) => {
+          reply.status(500).send(error);
+        }).then((result) => {
+          reply.status(200).send(result);
+        })
     },
   );
 
@@ -17,7 +23,7 @@ export async function exerciseController(
     '/exercises/:id',
     async (request: FastifyRequest, reply: FastifyReply) => {
       const { id } = request.params as { id: string };
-      const user: User = new User();
+      const user: User = new User(opts.exerciseRepository);
       const exercise = await user.getExercise({ id });
       reply.send(exercise);
     },
