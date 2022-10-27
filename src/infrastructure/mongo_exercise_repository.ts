@@ -6,9 +6,19 @@ export class MongoExerciseRepository implements IExerciseRepository {
 
   constructor() {
     this.exercises = [
-      new Exercise('2ff1b6ba-5823-4551-9827-0d669da4b6fd', 'Hello, World!', 'This exrcise will cover...', []),
-      new Exercise('7ad52ef0-34f0-4d59-b9ff-94eca3ca7558', 'Doom', 'This is brutal...', []),
-    ]
+      new Exercise(
+        '2ff1b6ba-5823-4551-9827-0d669da4b6fd',
+        'Hello, World!',
+        'This exrcise will cover...',
+        [],
+      ),
+      new Exercise(
+        '7ad52ef0-34f0-4d59-b9ff-94eca3ca7558',
+        'Doom',
+        'This is brutal...',
+        [],
+      ),
+    ];
   }
 
   public async getExercises(): Promise<Exercise[]> {
@@ -19,16 +29,16 @@ export class MongoExerciseRepository implements IExerciseRepository {
     console.log(this.exercises);
     const exercise = this.exercises.find((value) => {
       console.log(value);
-      return value.id == id
+      return value.id == id;
     });
     if (exercise === undefined) {
       Promise.reject('Exercise not found');
     }
 
     if (exercise == undefined) {
-      return Promise.reject()
+      return Promise.reject();
     } else {
-      return Promise.resolve(exercise)
+      return Promise.resolve(exercise);
     }
   }
 }
