@@ -8,7 +8,6 @@ export async function exerciseController(
   fastify.get(
     '/exercises',
     async (request: FastifyRequest, reply: FastifyReply) => {
-      console.log(opts);
       const user = new User(opts.exerciseRepository);
       await user
         .getExercises({})

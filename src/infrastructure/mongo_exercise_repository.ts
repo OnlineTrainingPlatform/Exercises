@@ -26,9 +26,7 @@ export class MongoExerciseRepository implements IExerciseRepository {
   }
 
   public async getExerciseById(id: string): Promise<Exercise> {
-    console.log(this.exercises);
     const exercise = this.exercises.find((value) => {
-      console.log(value);
       return value.id == id;
     });
     if (exercise === undefined) {
