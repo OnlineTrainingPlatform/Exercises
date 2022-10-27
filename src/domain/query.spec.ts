@@ -1,7 +1,7 @@
 import { Query } from './query';
 
 describe('Constructor', () => {
-  it('Invalid validation property query throws an error', () => {
+  it('Throws an error if the query is an invalid validation property', () => {
     expect(() => new Query('E< >')).toThrow(Error);
     expect(() => new Query('E < >')).toThrow(Error);
     expect(() => new Query('E <>')).toThrow(Error);
@@ -9,7 +9,7 @@ describe('Constructor', () => {
     expect(() => new Query('E < > ')).toThrow(Error);
     expect(() => new Query('E <> ')).toThrow(Error);
   }),
-    it('Invalid safety property query throws an error', () => {
+    it('Throws an error if the query is an invalid safety property', () => {
       expect(() => new Query('A[ ]')).toThrow(Error);
       expect(() => new Query('A [ ]')).toThrow(Error);
       expect(() => new Query('A []')).toThrow(Error);
@@ -17,7 +17,7 @@ describe('Constructor', () => {
       expect(() => new Query('A [ ] ')).toThrow(Error);
       expect(() => new Query('A [] ')).toThrow(Error);
     }),
-    it('Invalid safety property query throws an error', () => {
+    it('Throws an error if the query is an invalid safety property', () => {
       expect(() => new Query('E[ ]')).toThrow(Error);
       expect(() => new Query('E [ ]')).toThrow(Error);
       expect(() => new Query('E []')).toThrow(Error);
@@ -25,7 +25,7 @@ describe('Constructor', () => {
       expect(() => new Query('E [ ] ')).toThrow(Error);
       expect(() => new Query('E [] ')).toThrow(Error);
     }),
-    it('Invalid liveness property query throws an error', () => {
+    it('Throws an error if the query is an invalid liveness property', () => {
       expect(() => new Query('A< >')).toThrow(Error);
       expect(() => new Query('A < >')).toThrow(Error);
       expect(() => new Query('A <>')).toThrow(Error);
@@ -33,7 +33,7 @@ describe('Constructor', () => {
       expect(() => new Query('A < > ')).toThrow(Error);
       expect(() => new Query('A <> ')).toThrow(Error);
     }),
-    it('Valid validation property', () => {
+    it('Throws an error if the query is an invalid validation property', () => {
       expect(new Query('E<> Something.Idle').query).toBe('E<> Something.Idle');
       expect(new Query(' E<> Something.Idle').query).toBe('E<> Something.Idle');
       expect(new Query('E<> Something.Idle ').query).toBe('E<> Something.Idle');
@@ -47,7 +47,7 @@ describe('Constructor', () => {
         'E<>  Something.Idle',
       );
     }),
-    it('Valid safety property', () => {
+    it('Throws an error if the query is an invalid safety property', () => {
       expect(new Query('A[] Something.Idle').query).toBe('A[] Something.Idle');
       expect(new Query(' A[] Something.Idle').query).toBe('A[] Something.Idle');
       expect(new Query('A[] Something.Idle ').query).toBe('A[] Something.Idle');
@@ -74,7 +74,7 @@ describe('Constructor', () => {
         'E[]  Something.Idle',
       );
     }),
-    it('Valid liveness property', () => {
+    it('Throws an error if the query is an invalid liveness property', () => {
       expect(new Query('A<> Something.Idle').query).toBe('A<> Something.Idle');
       expect(new Query(' A<> Something.Idle').query).toBe('A<> Something.Idle');
       expect(new Query('A<> Something.Idle ').query).toBe('A<> Something.Idle');
