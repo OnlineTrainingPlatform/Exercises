@@ -5,7 +5,7 @@ import { exerciseController } from './presentation';
 const server = fastify();
 server.register(exerciseController, {
   prefix: '/api/v1',
-  exerciseRepository: new MongoExerciseRepository()
+  exerciseRepository: new MongoExerciseRepository(),
 });
 
 server.listen({ port: 8080 }, (err: any, address: any) => {

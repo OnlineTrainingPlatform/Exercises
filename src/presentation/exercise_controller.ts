@@ -10,12 +10,14 @@ export async function exerciseController(
     async (request: FastifyRequest, reply: FastifyReply) => {
       console.log(opts);
       const user = new User(opts.exerciseRepository);
-      await user.getExercises({})
+      await user
+        .getExercises({})
         .catch((error) => {
           reply.status(500).send(error);
-        }).then((result) => {
-          reply.status(200).send(result);
         })
+        .then((result) => {
+          reply.status(200).send(result);
+        });
     },
   );
 

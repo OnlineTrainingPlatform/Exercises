@@ -19,9 +19,7 @@ export class User {
     IGetExerciseResponse
   >;
 
-  constructor(
-    repository: IExerciseRepository
-  ) {
+  constructor(repository: IExerciseRepository) {
     this.getExercisesUseCase = new GetExercisesUseCase(repository);
     this.getExerciseUseCase = new GetExerciseUseCase(repository);
   }

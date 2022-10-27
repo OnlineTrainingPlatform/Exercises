@@ -8,7 +8,7 @@ describe('/exercises', () => {
 
     const response = await server.inject().get('/exercises');
 
-    console.log(response.body)
+    console.log(response.body);
 
     expect(response.statusCode).toBe(200);
   });
