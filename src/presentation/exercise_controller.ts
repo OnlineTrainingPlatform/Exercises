@@ -26,8 +26,19 @@ export async function exerciseController(
     async (request: FastifyRequest, reply: FastifyReply) => {
       const { id } = request.params as { id: string };
       const user: User = new User(opts.exerciseRepository);
-      const exercise = await user.getExercise({ id });
-      reply.send(exercise);
+      if (id == undefined || id == '') {
+        reply.status(400).send();
+        return;
+      }
+
+      await user
+        .getExercise({ id })
+        .catch((error) => {
+          reply.send(500).send(error);
+        })
+        .then((result) => {
+          reply.status(200).send(result);
+        });
     },
   );
 }
