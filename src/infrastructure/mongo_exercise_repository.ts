@@ -1,9 +1,10 @@
+import { v4 as uuidv4 } from 'uuid';
 import { Exercise, IExerciseRepository } from '../domain';
 
 export class MongoExerciseRepository implements IExerciseRepository {
   private readonly exercises: Exercise[] = [
-    new Exercise('asd-dsa-s', 'Hello, World!', 'This exrcise will cover...'),
-    new Exercise('asd', 'Doom', 'This is brutal...'),
+    new Exercise(uuidv4(), 'Hello, World!', 'This exrcise will cover...', []),
+    new Exercise(uuidv4(), 'Doom', 'This is brutal...', []),
   ];
 
   public async getExercises(): Promise<Exercise[]> {
