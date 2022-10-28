@@ -5,6 +5,8 @@ interface IExerciseDocument {
   id: string;
   title: string;
   description: string;
+
+  toExercise: 
 }
 
 export class MongoExerciseRepository implements IExerciseRepository {
@@ -33,14 +35,14 @@ export class MongoExerciseRepository implements IExerciseRepository {
     );
   }
 
-  private convertModel(model: IExerciseDocument): Exercise {
+  private documentToExercise(model: IExerciseDocument): Exercise {
     return new Exercise(model.id, model.title, model.description, []);
   }
 
-  private convertModels(models: IExerciseDocument[]): Exercise[] {
+  private documentsToExercises(models: IExerciseDocument[]): Exercise[] {
     const exercises = [];
     for (const model of models) {
-      exercises.push(this.convertModel(model));
+      exercises.push(this.documentToExercise(model));
     }
     return exercises;
   }
@@ -51,7 +53,7 @@ export class MongoExerciseRepository implements IExerciseRepository {
       return Promise.reject(undefined);
     }
 
-    return this.convertModels(models);
+    return this.documentsToExercises(models);
   }
 
   public async getExerciseById(id: string): Promise<Exercise | undefined> {
@@ -60,6 +62,6 @@ export class MongoExerciseRepository implements IExerciseRepository {
       return Promise.reject(undefined);
     }
 
-    return Promise.resolve(this.convertModel(model));
+    return Promise.resolve(this.documentToExercise(model));
   }
 }
