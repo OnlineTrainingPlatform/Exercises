@@ -13,7 +13,6 @@ export class MongoExerciseRepository implements IExerciseRepository {
   private mongoose: Mongoose | undefined = undefined;
 
   constructor() {
-
     this.exerciseSchmea = new Schema<IExerciseDocument>({
       id: { type: String, required: true },
       title: { type: String, required: true },
@@ -66,7 +65,7 @@ export class MongoExerciseRepository implements IExerciseRepository {
   public async getExerciseById(id: string): Promise<Exercise | undefined> {
     await this.connect();
 
-    const model = await this.exerciseModel.findOne({id: id});
+    const model = await this.exerciseModel.findOne({ id: id });
     if (model == null) {
       return undefined;
     }
