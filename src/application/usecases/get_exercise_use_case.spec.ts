@@ -1,6 +1,7 @@
 import { Exercise, IExerciseRepository } from '../../domain';
 import { mock } from 'jest-mock-extended';
 import { GetExerciseUseCase } from './';
+import { Query } from '../../domain/query';
 import { v4 as uuidv4 } from 'uuid';
 
 describe('do', () => {
