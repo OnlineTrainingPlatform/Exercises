@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
-import { IGetExerciseResponse, User } from '../application';
+import { IGetExerciseResponse, IGetExercisesResponse, User } from '../application';
 
 export async function exerciseController(
   fastify: FastifyInstance,
@@ -15,7 +15,7 @@ export async function exerciseController(
           .catch((error) => {
             reply.status(500).send(error);
           })
-          .then((resolve) => {
+          .then((resolve: void | IGetExercisesResponse) => {
             reply.status(200).send(resolve);
           });
       } catch (error) {
