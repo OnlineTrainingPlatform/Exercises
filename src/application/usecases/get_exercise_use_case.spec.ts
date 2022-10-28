@@ -6,19 +6,19 @@ import { v4 as uuidv4 } from 'uuid';
 describe('do', () => {
   it('should return the exercise as the IDs match', async () => {
     const repository = mock<IExerciseRepository>();
-    const exercise = new Exercise(uuidv4(), 'title', 'desc', []);
+    const expected = new Exercise(uuidv4(), 'title', 'desc', []);
     const exerciseUseCase = new GetExerciseUseCase(repository);
 
     repository.getExerciseById.mockImplementation((id: string) => {
-      if (id === exercise.id) {
-        return Promise.resolve(exercise);
+      if (id === expected.id) {
+        return Promise.resolve(expected);
       }
       return Promise.resolve(undefined);
     });
 
-    const actual = await exerciseUseCase.do({ id: exercise.id });
+    const actual = await exerciseUseCase.do({ id: expected.id });
 
-    expect(actual).toEqual({ exercise });
+    expect(actual).toEqual({ exercise: expected });
   }),
     it('should return undefined as the IDs did not match', async () => {
       const repository = mock<IExerciseRepository>();
