@@ -5,8 +5,6 @@ interface IExerciseDocument {
   id: string;
   title: string;
   description: string;
-
-  toExercise: 
 }
 
 export class MongoExerciseRepository implements IExerciseRepository {
