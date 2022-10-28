@@ -6,7 +6,7 @@ export interface IGetExerciseRequest {
 }
 
 export interface IGetExerciseResponse {
-  exercise: Exercise;
+  exercise: Exercise | undefined;
 }
 
 export class GetExerciseUseCase
