@@ -2,9 +2,9 @@ import { Exercise, IExerciseRepository } from '../domain';
 import { Schema, model, connect, Model, Mongoose } from 'mongoose';
 
 interface IExerciseDocument {
-  id: string,
-  title: string,
-  description: string
+  id: string;
+  title: string;
+  description: string;
 }
 
 export class MongoExerciseRepository implements IExerciseRepository {
@@ -33,18 +33,21 @@ export class MongoExerciseRepository implements IExerciseRepository {
     this.exerciseSchmea = new Schema<IExerciseDocument>({
       id: { type: String, required: true },
       title: { type: String, required: true },
-      description: { type: String, required: true }
+      description: { type: String, required: true },
     });
 
-    this.exerciseModel = model<IExerciseDocument>('Exercise', this.exerciseSchmea);
+    this.exerciseModel = model<IExerciseDocument>(
+      'Exercise',
+      this.exerciseSchmea,
+    );
   }
 
   private convertModel(model: IExerciseDocument): Exercise {
-    return new Exercise(model.id, model.title, model.description, [])
+    return new Exercise(model.id, model.title, model.description, []);
   }
 
   private convertModels(models: IExerciseDocument[]): Exercise[] {
-    const exercises = []
+    const exercises = [];
     for (const model of models) {
       exercises.push(this.convertModel(model));
     }
@@ -56,16 +59,19 @@ export class MongoExerciseRepository implements IExerciseRepository {
       return Promise.resolve(this.mongoose);
     }
 
-    return connect('mongodb://root:eduroam@localhost:27017/?authMechanism=DEFAULT', {
-      dbName: 'exercises',
-      autoCreate: true
-    });
+    return connect(
+      'mongodb://root:eduroam@localhost:27017/?authMechanism=DEFAULT',
+      {
+        dbName: 'exercises',
+        autoCreate: true,
+      },
+    );
   }
 
   public async getExercises(): Promise<Exercise[]> {
     await this.connect();
 
-    const models = await this.exerciseModel.find({})
+    const models = await this.exerciseModel.find({});
     if (models == null) {
       return Promise.reject(undefined);
     }
