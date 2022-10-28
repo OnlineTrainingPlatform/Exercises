@@ -23,6 +23,14 @@ export class MongoExerciseRepository implements IExerciseRepository {
       'Exercise',
       this.exerciseSchmea,
     );
+
+    connect(
+      'mongodb://root:rootpassword@localhost:27017/?authMechanism=DEFAULT',
+      {
+        dbName: 'exercises',
+        autoCreate: true,
+      },
+    );
   }
 
   private convertModel(model: IExerciseDocument): Exercise {
@@ -37,23 +45,7 @@ export class MongoExerciseRepository implements IExerciseRepository {
     return exercises;
   }
 
-  private async connect(): Promise<Mongoose> {
-    if (this.mongoose != undefined) {
-      return Promise.resolve(this.mongoose);
-    }
-
-    return connect(
-      'mongodb://root:rootpassword@localhost:27017/?authMechanism=DEFAULT',
-      {
-        dbName: 'exercises',
-        autoCreate: true,
-      },
-    );
-  }
-
   public async getExercises(): Promise<Exercise[]> {
-    await this.connect();
-
     const models = await this.exerciseModel.find({});
     if (models == null) {
       return Promise.reject(undefined);
@@ -63,12 +55,11 @@ export class MongoExerciseRepository implements IExerciseRepository {
   }
 
   public async getExerciseById(id: string): Promise<Exercise | undefined> {
-    await this.connect();
-
-    const model = await this.exerciseModel.findOne({ id: id });
+    const model = await this.exerciseModel.findOne({ id });
     if (model == null) {
-      return undefined;
+      return Promise.reject(undefined);
     }
+
     return Promise.resolve(this.convertModel(model));
   }
 }
