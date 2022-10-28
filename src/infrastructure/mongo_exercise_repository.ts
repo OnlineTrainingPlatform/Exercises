@@ -12,23 +12,7 @@ export class MongoExerciseRepository implements IExerciseRepository {
   private readonly exerciseModel: Model<IExerciseDocument>;
   private mongoose: Mongoose | undefined = undefined;
 
-  private readonly exercises: Exercise[] = [];
-
   constructor() {
-    this.exercises = [
-      new Exercise(
-        '2ff1b6ba-5823-4551-9827-0d669da4b6fd',
-        'Hello, World! Nope',
-        'This exrcise will cover...',
-        [],
-      ),
-      new Exercise(
-        '7ad52ef0-34f0-4d59-b9ff-94eca3ca7558',
-        'Doom',
-        'This is brutal...',
-        [],
-      ),
-    ];
 
     this.exerciseSchmea = new Schema<IExerciseDocument>({
       id: { type: String, required: true },
@@ -60,7 +44,7 @@ export class MongoExerciseRepository implements IExerciseRepository {
     }
 
     return connect(
-      'mongodb://root:eduroam@localhost:27017/?authMechanism=DEFAULT',
+      'mongodb://root:rootpassword@localhost:27017/?authMechanism=DEFAULT',
       {
         dbName: 'exercises',
         autoCreate: true,
@@ -81,10 +65,11 @@ export class MongoExerciseRepository implements IExerciseRepository {
 
   public async getExerciseById(id: string): Promise<Exercise | undefined> {
     await this.connect();
-    const exercise = this.exercises.find((value) => {
-      return value.id == id;
-    });
 
-    return Promise.resolve(exercise);
+    const model = await this.exerciseModel.findOne({id: id});
+    if (model == null) {
+      return undefined;
+    }
+    return Promise.resolve(this.convertModel(model));
   }
 }
