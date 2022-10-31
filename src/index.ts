@@ -3,6 +3,7 @@ import { MongoExerciseRepository } from './infrastructure';
 import { exerciseController, statusController } from './presentation';
 import * as dotenv from 'dotenv';
 
+// Load the ".env" fiel from the root. Afterwards check all required environment bindings
 const envResult = dotenv.config();
 if (envResult.error != undefined) {
   console.log(`dotenv failed parsing the .env file ${envResult.error!}`);
@@ -35,8 +36,11 @@ if (process.env.PORT == undefined) {
 }
 
 const server = fastify();
+
+// Register the controllers
 server.register(exerciseController, {
   prefix: process.env.API_PREFIX,
+  // Constructing the Mongo repository also starts the connection to Mongo
   exerciseRepository: new MongoExerciseRepository(
     process.env.MONGO_CONNECTION_STRING!,
     process.env.MONGO_DOCUMENT_NAME,
