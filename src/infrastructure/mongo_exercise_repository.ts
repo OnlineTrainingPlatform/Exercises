@@ -14,8 +14,8 @@ export class MongoExerciseRepository implements IExerciseRepository {
 
   constructor(
     connection: string,
-    document_name: string = "Exercise",
-    database_name: string = "exercises",
+    document_name: string | undefined,
+    database_name: string | undefined,
   ) {
     this.exerciseSchmea = new Schema<IExerciseDocument>({
       id: { type: String, required: true },
@@ -24,14 +24,14 @@ export class MongoExerciseRepository implements IExerciseRepository {
     });
 
     this.exerciseModel = model<IExerciseDocument>(
-      document_name,
+      document_name || "Exercise",
       this.exerciseSchmea,
     );
 
     connect(
       connection,
       {
-        dbName: database_name,
+        dbName: database_name || "exercises",
         autoCreate: true,
       },
     );

@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rimraf ./build && tsc",
     "build-docker": "docker build -t ${npm_package_name}:${npm_package_version} -t ${npm_package_name}:dev .",
-    "start:dev": "nodemon",
+    "start:dev": "nodemon -w .env",
     "start": "npm run build && node build/index.js",
     "lint": "eslint . --ext .ts --fix",
     "format": "npm run prettier-format",
