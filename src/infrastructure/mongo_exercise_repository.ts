@@ -10,7 +10,6 @@ interface IExerciseDocument {
 export class MongoExerciseRepository implements IExerciseRepository {
   private readonly exerciseSchmea: Schema<IExerciseDocument>;
   private readonly exerciseModel: Model<IExerciseDocument>;
-  private mongoose: Mongoose | undefined = undefined;
 
   constructor(
     connection: string,
