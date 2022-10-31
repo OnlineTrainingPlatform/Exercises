@@ -3,7 +3,7 @@ import { Schema, model, connect, Model } from 'mongoose';
 import { v4 } from 'uuid';
 
 interface IQuery {
-  query: string
+  query: string;
 }
 
 interface IExerciseDocument {
@@ -36,7 +36,7 @@ export class MongoExerciseRepository implements IExerciseRepository {
       id: { type: String, required: true },
       title: { type: String, required: true },
       description: { type: String, required: true },
-      queries: { },
+      queries: {},
     });
 
     // The model adhereing to the document schema
@@ -53,20 +53,18 @@ export class MongoExerciseRepository implements IExerciseRepository {
 
     new this.exerciseModel({
       id: v4(),
-      title: "Title",
-      description: "Description",
-      queries: [
-        { query: "A<>  Something.Idle" }
-      ]
+      title: 'Title',
+      description: 'Description',
+      queries: [{ query: 'A<>  Something.Idle' }],
     }).save();
   }
 
   private documentToExercise(model: IExerciseDocument): Exercise {
-    const queries: Query[] = []
+    const queries: Query[] = [];
     if (model.queries != undefined) {
       for (const queryObj of model.queries) {
-        queries.push(new Query(queryObj.query))
-      } 
+        queries.push(new Query(queryObj.query));
+      }
     }
 
     return new Exercise(model.id, model.title, model.description, queries);
