@@ -17,12 +17,15 @@ export async function exerciseController(
         await user
           .getExercises({})
           .catch((error) => {
+            // Promise rejected or an exception was thrown
             reply.status(500).send(error);
           })
           .then((resolve: void | IGetExercisesResponse) => {
+            // Promise resolved with a response
             reply.status(200).send(resolve);
           });
       } catch (error) {
+        // Other than getExercises might cause an exception
         reply.status(500).send();
       }
     },
@@ -35,6 +38,7 @@ export async function exerciseController(
         const { id } = request.params as { id: string };
         const user: User = new User(opts.exerciseRepository);
         if (id == undefined || id == '') {
+          // An ID is required for the request to be valid (400 bad request)
           reply.status(400).send();
           return;
         }
@@ -42,18 +46,22 @@ export async function exerciseController(
         await user
           .getExercise({ id })
           .catch((error) => {
+            // Promise was rejected or an exception was thrown
             reply.status(500).send(error);
           })
           .then((resolve: void | IGetExerciseResponse) => {
             const response = resolve as IGetExerciseResponse;
 
             if (response.exercise == undefined) {
+              // Repository returned undefined which means that the exercise could not be found
               reply.status(404).send();
             } else {
+              // The exercise was found so we return 200 OK
               reply.status(200).send(response);
             }
           });
       } catch (error) {
+        // Other than getExercise might cause an exception
         reply.status(500).send();
       }
     },
