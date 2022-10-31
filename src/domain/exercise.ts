@@ -12,6 +12,13 @@ export class Exercise {
   private readonly _description: string;
   private readonly _queries: Query[];
 
+  /**
+   * Creates a new instance of an exercise
+   * @param id The ID of the exercise which must be a UUIDv4
+   * @param title The title of string which cannot be empty
+   * @param description The description of string which cannot be empty
+   * @param queries The queries which are checked for this exercise
+   */
   constructor(
     id: string,
     title: string,
