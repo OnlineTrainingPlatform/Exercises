@@ -12,7 +12,11 @@ export class MongoExerciseRepository implements IExerciseRepository {
   private readonly exerciseModel: Model<IExerciseDocument>;
   private mongoose: Mongoose | undefined = undefined;
 
-  constructor() {
+  constructor(
+    connection: string,
+    document_name: string = "Exercise",
+    database_name: string = "exercises",
+  ) {
     this.exerciseSchmea = new Schema<IExerciseDocument>({
       id: { type: String, required: true },
       title: { type: String, required: true },
@@ -20,14 +24,14 @@ export class MongoExerciseRepository implements IExerciseRepository {
     });
 
     this.exerciseModel = model<IExerciseDocument>(
-      'Exercise',
+      document_name,
       this.exerciseSchmea,
     );
 
     connect(
-      'mongodb://root:rootpassword@localhost:27017/?authMechanism=DEFAULT',
+      connection,
       {
-        dbName: 'exercises',
+        dbName: database_name,
         autoCreate: true,
       },
     );
