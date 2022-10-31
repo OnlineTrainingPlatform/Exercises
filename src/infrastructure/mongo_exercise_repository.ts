@@ -7,26 +7,38 @@ interface IExerciseDocument {
   description: string;
 }
 
+/**
+ * A concrete implementation of the exercise repository interface
+ */
 export class MongoExerciseRepository implements IExerciseRepository {
   private readonly exerciseSchmea: Schema<IExerciseDocument>;
   private readonly exerciseModel: Model<IExerciseDocument>;
 
+  /**
+   * Construct a MongoDB repository from which we query exercises
+   * @param connection The conenction string to MongoDB
+   * @param document_name The document name for exercises
+   * @param database_name The database name for exercises
+   */
   constructor(
     connection: string,
     document_name: string | undefined,
     database_name: string | undefined,
   ) {
+    // Create the schema with the document rules
     this.exerciseSchmea = new Schema<IExerciseDocument>({
       id: { type: String, required: true },
       title: { type: String, required: true },
       description: { type: String, required: true },
     });
 
+    // The model adhereing to the document schema
     this.exerciseModel = model<IExerciseDocument>(
       document_name || 'Exercise',
       this.exerciseSchmea,
     );
 
+    // Connecting to mongoose, this is async but querying from it will await a connection
     connect(connection, {
       dbName: database_name || 'exercises',
       autoCreate: true,
@@ -45,6 +57,9 @@ export class MongoExerciseRepository implements IExerciseRepository {
     return exercises;
   }
 
+  /**
+   * @returns All exercises which are stored persistently in MonogDB
+   */
   public async getExercises(): Promise<Exercise[]> {
     const models = await this.exerciseModel.find({});
     if (models == null) {
@@ -54,10 +69,15 @@ export class MongoExerciseRepository implements IExerciseRepository {
     return this.documentsToExercises(models);
   }
 
+  /**
+   * Retrieves from MonogDB an exercise with a specific ID
+   * @param id The ID of the exercise
+   * @returns the exercise with the ID or undefined if it could not be found.
+   */
   public async getExerciseById(id: string): Promise<Exercise | undefined> {
     const model = await this.exerciseModel.findOne({ id });
     if (model == null) {
-      return Promise.reject(undefined);
+      return Promise.resolve(undefined);
     }
 
     return Promise.resolve(this.documentToExercise(model));
