@@ -1,7 +1,7 @@
-import { Exercise, IExerciseRepository } from '../../domain';
 import { mock } from 'jest-mock-extended';
-import { GetExerciseUseCase } from './';
+import { GetExerciseUseCase } from './get_exercise_use_case';
 import { v4 as uuidv4 } from 'uuid';
+import { Exercise, IExerciseRepository } from '@domain';
 
 describe('do', () => {
   it('should return the exercise as the IDs match', async () => {

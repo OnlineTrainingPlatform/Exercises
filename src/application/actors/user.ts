@@ -7,7 +7,7 @@ import {
   GetExerciseUseCase,
   IUseCase,
 } from '..';
-import { IExerciseRepository } from '../../domain';
+import { IExerciseRepository } from '@domain';
 
 export class User {
   private readonly getExercisesUseCase: IUseCase<
