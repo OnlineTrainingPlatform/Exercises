@@ -1,10 +1,16 @@
-import { Exercise, IExerciseRepository } from '../domain';
-import { Schema, model, connect, Model, Mongoose } from 'mongoose';
+import { Exercise, IExerciseRepository, Query } from '../domain';
+import { Schema, model, connect, Model } from 'mongoose';
+import { v4 } from 'uuid';
+
+interface IQuery {
+  query: string
+}
 
 interface IExerciseDocument {
   id: string;
   title: string;
   description: string;
+  queries: IQuery[];
 }
 
 /**
@@ -30,6 +36,7 @@ export class MongoExerciseRepository implements IExerciseRepository {
       id: { type: String, required: true },
       title: { type: String, required: true },
       description: { type: String, required: true },
+      queries: { },
     });
 
     // The model adhereing to the document schema
@@ -43,10 +50,26 @@ export class MongoExerciseRepository implements IExerciseRepository {
       dbName: database_name || 'exercises',
       autoCreate: true,
     });
+
+    new this.exerciseModel({
+      id: v4(),
+      title: "Title",
+      description: "Description",
+      queries: [
+        { query: "A<>  Something.Idle" }
+      ]
+    }).save();
   }
 
   private documentToExercise(model: IExerciseDocument): Exercise {
-    return new Exercise(model.id, model.title, model.description, []);
+    const queries: Query[] = []
+    if (model.queries != undefined) {
+      for (const queryObj of model.queries) {
+        queries.push(new Query(queryObj.query))
+      } 
+    }
+
+    return new Exercise(model.id, model.title, model.description, queries);
   }
 
   private documentsToExercises(models: IExerciseDocument[]): Exercise[] {
