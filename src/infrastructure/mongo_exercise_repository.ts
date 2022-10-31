@@ -1,4 +1,4 @@
-import { Exercise, IExerciseRepository } from '@domain';
+import { Exercise, IExerciseRepository } from '../domain';
 import { Schema, model, connect, Model, Mongoose } from 'mongoose';
 
 interface IExerciseDocument {

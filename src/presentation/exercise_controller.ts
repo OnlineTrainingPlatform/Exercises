@@ -1,6 +1,6 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
-import { User } from '@actors';
-import { IGetExerciseResponse, IGetExercisesResponse } from '@usecases';
+import { User } from '../application/actors';
+import { IGetExerciseResponse, IGetExercisesResponse } from '../application/usecases';
 
 export async function exerciseController(
   fastify: FastifyInstance,

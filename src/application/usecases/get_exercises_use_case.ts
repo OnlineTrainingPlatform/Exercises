@@ -1,4 +1,4 @@
-import { Exercise, IExerciseRepository } from '@domain';
+import { Exercise, IExerciseRepository } from '../../domain';
 import { IUseCase } from './i_use_case';
 
 // eslint-disable-next-line

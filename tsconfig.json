@@ -11,14 +11,6 @@
     "types": ["node", "jest"],
     "skipLibCheck": true,
     "baseUrl": "src",
-    "paths": {
-      "@application": ["application"],
-      "@actors": ["application/actors"],
-      "@usecases": ["application/usecases"],
-      "@domain": ["domain"],
-      "@infrastructure": ["infrastructure"],
-      "@presentation": ["presentation"],
-    },
   },
   "include": ["src/**/*"],
   "exclude": ["src/**/*.spec.ts"]
