@@ -24,17 +24,14 @@ export class MongoExerciseRepository implements IExerciseRepository {
     });
 
     this.exerciseModel = model<IExerciseDocument>(
-      document_name || "Exercise",
+      document_name || 'Exercise',
       this.exerciseSchmea,
     );
 
-    connect(
-      connection,
-      {
-        dbName: database_name || "exercises",
-        autoCreate: true,
-      },
-    );
+    connect(connection, {
+      dbName: database_name || 'exercises',
+      autoCreate: true,
+    });
   }
 
   private documentToExercise(model: IExerciseDocument): Exercise {
