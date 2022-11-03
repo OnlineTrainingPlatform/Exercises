@@ -4,7 +4,7 @@ import { GetExercisesUseCase } from './get_exercises_use_case';
 import { v4 as uuidv4 } from 'uuid';
 
 describe('do', () => {
-  it('should return an empty list of exercises if non were found', async () => {
+  it('should return an empty list of exercises if none were found', async () => {
     // Arrange
     const repository = mock<IExerciseRepository>();
     const exercisesUseCase = new GetExercisesUseCase(repository);
