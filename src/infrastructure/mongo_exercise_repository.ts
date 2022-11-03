@@ -22,7 +22,7 @@ export class MongoExerciseRepository implements IExerciseRepository {
 
   /**
    * Construct a MongoDB repository from which we query exercises
-   * @param connection The conenction string to MongoDB
+   * @param connection The connection string to MongoDB
    * @param document_name The document name for exercises
    * @param database_name The database name for exercises
    */
