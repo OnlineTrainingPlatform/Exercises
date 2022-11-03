@@ -13,7 +13,7 @@ ENV NODE_ENV $NODE_ENV
 
 # Copy package confs to builder and make a clean install
 COPY package*.json ./
-RUN npm ci -D && npm cache clean --force
+RUN npm i -D && npm cache clean --force
 
 # Copy src and tsconfig on seperate layers as src is highly volatile to changes
 COPY src/ ./src/
@@ -37,15 +37,17 @@ USER node
 COPY --from=builder /dist ./
 
 # Install production dependencies
-RUN npm ci && npm cache clean --force
+RUN npm i && npm cache clean --force
 
 # Port to expose which can be overwritten with docker-compose
 ARG PORT=8080
 EXPOSE $PORT
 
+ARG STATUS_PATH=/api/v1/status
+
 # Setup healthcheck
 HEALTHCHECK --interval=10s --timeout=2s --start-period=15s \
-    CMD ["node", "/healthcheck.js"]
+    CMD ["PORT=$PORT", "STATUS_PATH=$STATUS_PATH", "node", "/healthcheck.js"]
 
 # Execute NodeJS (not NPM script) to handle SIGTERM and SIGINT signals.
 CMD ["node", "./build/index.js"]
