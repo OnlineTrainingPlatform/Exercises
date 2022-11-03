@@ -3,7 +3,7 @@ import { MongoExerciseRepository } from './infrastructure';
 import { exerciseController, statusController } from './presentation';
 import * as dotenv from 'dotenv';
 
-// Load the ".env" fiel from the root. Afterwards check all required environment bindings
+// Load the ".env" file from the root. Afterwards check all required environment bindings
 const envResult = dotenv.config();
 if (envResult.error != undefined) {
   console.log(`dotenv failed parsing the .env file ${envResult.error!}`);
