@@ -3,7 +3,7 @@ import { mock } from 'jest-mock-extended';
 import { exerciseController } from './exercise_controller';
 import { Exercise, IExerciseRepository } from '../domain';
 import { v4 as uuidv4 } from 'uuid';
-import { IGetExerciseResponse, IGetExercisesResponse } from '../application';
+import { IGetAnExerciseResponse, IGetAllExercisesResponse } from '../application';
 
 describe('/exercises', () => {
   const server = fastify();
@@ -22,7 +22,7 @@ describe('/exercises', () => {
 
     // Act
     const response = await server.inject().get('/exercises');
-    const payload = JSON.parse(response.payload) as IGetExercisesResponse;
+    const payload = JSON.parse(response.payload) as IGetAllExercisesResponse;
 
     // Assert
     expect(response.statusCode).toBe(200);
@@ -69,7 +69,7 @@ describe('/exercises/:id', () => {
 
     // Act
     const response = await server.inject(`/exercises/${id}`);
-    const payload = JSON.parse(response.payload) as IGetExerciseResponse;
+    const payload = JSON.parse(response.payload) as IGetAnExerciseResponse;
 
     // Assert
     expect(response.statusCode).toBe(200);
