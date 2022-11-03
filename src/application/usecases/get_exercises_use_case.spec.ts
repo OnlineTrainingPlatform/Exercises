@@ -18,7 +18,7 @@ describe('do', () => {
     // Assert
     expect(actual.exercises).toEqual([]);
   }),
-    it('should return an empty list of exercises if non were found', async () => {
+    it('should return an empty list of exercises if none were found', async () => {
       // Arrange
       const repository = mock<IExerciseRepository>();
       const exercise = new Exercise(uuidv4(), 'title', 'desc', []);
