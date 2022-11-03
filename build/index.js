@@ -30,6 +30,7 @@ var fastify_1 = __importDefault(require("fastify"));
 var infrastructure_1 = require("./infrastructure");
 var presentation_1 = require("./presentation");
 var dotenv = __importStar(require("dotenv"));
+// Load the ".env" fiel from the root. Afterwards check all required environment bindings
 var envResult = dotenv.config();
 if (envResult.error != undefined) {
     console.log("dotenv failed parsing the .env file ".concat(envResult.error));
@@ -56,12 +57,14 @@ if (process.env.PORT == undefined) {
     process.exit(1);
 }
 var server = (0, fastify_1.default)();
+// Register the controllers
 server.register(presentation_1.exerciseController, {
     prefix: process.env.API_PREFIX,
+    // Constructing the Mongo repository also starts the connection to Mongo
     exerciseRepository: new infrastructure_1.MongoExerciseRepository(process.env.MONGO_CONNECTION_STRING, process.env.MONGO_DOCUMENT_NAME, process.env.MONGO_DB_NAME),
 });
 server.register(presentation_1.statusController, {
-    prefix: process.env.API_PREFIX
+    prefix: process.env.API_PREFIX,
 });
 server.listen({ port: Number(process.env.PORT) }, function (err, address) {
     if (err) {

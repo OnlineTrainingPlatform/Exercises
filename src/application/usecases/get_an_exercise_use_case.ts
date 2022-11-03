@@ -1,16 +1,16 @@
 import { Exercise, IExerciseRepository } from '../../domain';
 import { IUseCase } from './i_use_case';
 
-export interface IGetExerciseRequest {
+export interface IGetAnExerciseRequest {
   id: string;
 }
 
-export interface IGetExerciseResponse {
+export interface IGetAnExerciseResponse {
   exercise: Exercise | undefined;
 }
 
-export class GetExerciseUseCase
-  implements IUseCase<IGetExerciseRequest, IGetExerciseResponse>
+export class GetAnExerciseUseCase
+  implements IUseCase<IGetAnExerciseRequest, IGetAnExerciseResponse>
 {
   private readonly repository: IExerciseRepository;
 
@@ -18,7 +18,9 @@ export class GetExerciseUseCase
     this.repository = repository;
   }
 
-  public async do(request: IGetExerciseRequest): Promise<IGetExerciseResponse> {
+  public async do(
+    request: IGetAnExerciseRequest,
+  ): Promise<IGetAnExerciseResponse> {
     return {
       exercise: await this.repository.getExerciseById(request.id),
     };

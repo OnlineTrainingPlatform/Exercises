@@ -1,8 +1,8 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import { User } from '../application/actors';
 import {
-  IGetExerciseResponse,
-  IGetExercisesResponse,
+  IGetAnExerciseResponse,
+  IGetAllExercisesResponse,
 } from '../application/usecases';
 
 export async function exerciseController(
@@ -20,7 +20,7 @@ export async function exerciseController(
             // Promise rejected or an exception was thrown
             reply.status(500).send(error);
           })
-          .then((resolve: void | IGetExercisesResponse) => {
+          .then((resolve: void | IGetAllExercisesResponse) => {
             // Promise resolved with a response
             reply.status(200).send(resolve);
           });
@@ -49,8 +49,8 @@ export async function exerciseController(
             // Promise was rejected or an exception was thrown
             reply.status(500).send(error);
           })
-          .then((resolve: void | IGetExerciseResponse) => {
-            const response = resolve as IGetExerciseResponse;
+          .then((resolve: void | IGetAnExerciseResponse) => {
+            const response = resolve as IGetAnExerciseResponse;
 
             if (response.exercise == undefined) {
               // Repository returned undefined which means that the exercise could not be found

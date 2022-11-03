@@ -2,14 +2,14 @@ import { Exercise, IExerciseRepository } from '../../domain';
 import { IUseCase } from './i_use_case';
 
 // eslint-disable-next-line
-export interface IGetExercisesRequest {}
+export interface IGetAllExercisesRequest {}
 
-export interface IGetExercisesResponse {
+export interface IGetAllExercisesResponse {
   exercises: Exercise[];
 }
 
-export class GetExercisesUseCase
-  implements IUseCase<IGetExercisesRequest, IGetExercisesResponse>
+export class GetAllExercisesUseCase
+  implements IUseCase<IGetAllExercisesRequest, IGetAllExercisesResponse>
 {
   private readonly repository: IExerciseRepository;
 
@@ -17,7 +17,9 @@ export class GetExercisesUseCase
     this.repository = repository;
   }
 
-  public async do(_: IGetExercisesRequest): Promise<IGetExercisesResponse> {
+  public async do(
+    _: IGetAllExercisesRequest,
+  ): Promise<IGetAllExercisesResponse> {
     return {
       exercises: await this.repository.getExercises(),
     };

@@ -1,38 +1,38 @@
 import {
-  IGetExerciseRequest,
-  IGetExerciseResponse,
-  IGetExercisesRequest,
-  IGetExercisesResponse,
-  GetExercisesUseCase,
-  GetExerciseUseCase,
+  IGetAnExerciseRequest,
+  IGetAnExerciseResponse,
+  IGetAllExercisesRequest,
+  IGetAllExercisesResponse,
+  GetAllExercisesUseCase,
+  GetAnExerciseUseCase,
   IUseCase,
 } from '..';
 import { IExerciseRepository } from '../../domain';
 
 export class User {
   private readonly getExercisesUseCase: IUseCase<
-    IGetExercisesRequest,
-    IGetExercisesResponse
+    IGetAllExercisesRequest,
+    IGetAllExercisesResponse
   >;
   private readonly getExerciseUseCase: IUseCase<
-    IGetExerciseRequest,
-    IGetExerciseResponse
+    IGetAnExerciseRequest,
+    IGetAnExerciseResponse
   >;
 
   constructor(repository: IExerciseRepository) {
-    this.getExercisesUseCase = new GetExercisesUseCase(repository);
-    this.getExerciseUseCase = new GetExerciseUseCase(repository);
+    this.getExercisesUseCase = new GetAllExercisesUseCase(repository);
+    this.getExerciseUseCase = new GetAnExerciseUseCase(repository);
   }
 
   public async getExercises(
-    request: IGetExercisesRequest,
-  ): Promise<IGetExercisesResponse> {
+    request: IGetAllExercisesRequest,
+  ): Promise<IGetAllExercisesResponse> {
     return this.getExercisesUseCase.do(request);
   }
 
   public async getExercise(
-    request: IGetExerciseRequest,
-  ): Promise<IGetExerciseResponse> {
+    request: IGetAnExerciseRequest,
+  ): Promise<IGetAnExerciseResponse> {
     return this.getExerciseUseCase.do(request);
   }
 }

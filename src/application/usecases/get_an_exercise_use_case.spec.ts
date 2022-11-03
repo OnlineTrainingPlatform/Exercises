@@ -1,5 +1,5 @@
 import { mock } from 'jest-mock-extended';
-import { GetExerciseUseCase } from './get_exercise_use_case';
+import { GetAnExerciseUseCase } from './get_an_exercise_use_case';
 import { v4 as uuidv4 } from 'uuid';
 import { Exercise, IExerciseRepository } from '../../domain';
 
@@ -8,7 +8,7 @@ describe('do', () => {
     // Arrange
     const repository = mock<IExerciseRepository>();
     const expected = new Exercise(uuidv4(), 'title', 'desc', []);
-    const exerciseUseCase = new GetExerciseUseCase(repository);
+    const exerciseUseCase = new GetAnExerciseUseCase(repository);
 
     // Mock
     repository.getExerciseById.mockImplementation((id: string) => {
@@ -28,7 +28,7 @@ describe('do', () => {
       // Arrange
       const repository = mock<IExerciseRepository>();
       const exercise = new Exercise(uuidv4(), 'title', 'desc', []);
-      const exerciseUseCase = new GetExerciseUseCase(repository);
+      const exerciseUseCase = new GetAnExerciseUseCase(repository);
 
       // Mock
       repository.getExerciseById.mockImplementation((id: string) => {
