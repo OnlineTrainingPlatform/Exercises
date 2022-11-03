@@ -3,7 +3,10 @@ import { mock } from 'jest-mock-extended';
 import { exerciseController } from './exercise_controller';
 import { Exercise, IExerciseRepository } from '../domain';
 import { v4 as uuidv4 } from 'uuid';
-import { IGetAnExerciseResponse, IGetAllExercisesResponse } from '../application';
+import {
+  IGetAnExerciseResponse,
+  IGetAllExercisesResponse,
+} from '../application';
 
 describe('/exercises', () => {
   const server = fastify();
