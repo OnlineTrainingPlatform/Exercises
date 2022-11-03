@@ -79,7 +79,7 @@ export class MongoExerciseRepository implements IExerciseRepository {
   }
 
   /**
-   * @returns All exercises which are stored persistently in MonogDB
+   * @returns All exercises which are stored persistently in MongoDB
    */
   public async getExercises(): Promise<Exercise[]> {
     const models = await this.exerciseModel.find({});
