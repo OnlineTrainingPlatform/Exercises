@@ -39,7 +39,7 @@ export class MongoExerciseRepository implements IExerciseRepository {
       queries: {},
     });
 
-    // The model adhereing to the document schema
+    // The model adhering to the document schema
     this.exerciseModel = model<IExerciseDocument>(
       document_name || 'Exercise',
       this.exerciseSchmea,
