@@ -24,7 +24,7 @@ describe('do', () => {
     // Assert
     expect(actual).toEqual({ exercise: expected });
   }),
-    it('should return undefined as the IDs did not match', async () => {
+    it('Should return undefined as the IDs did not match', async () => {
       // Arrange
       const repository = mock<IExerciseRepository>();
       const exercise = new Exercise(uuidv4(), 'title', 'desc', []);

@@ -4,7 +4,7 @@ import { GetAllExercisesUseCase } from './get_all_exercises_use_case';
 import { v4 as uuidv4 } from 'uuid';
 
 describe('do', () => {
-  it('should return an empty list of exercises if none were found', async () => {
+  it('Should return an empty list of exercises if none were found', async () => {
     // Arrange
     const repository = mock<IExerciseRepository>();
     const exercisesUseCase = new GetAllExercisesUseCase(repository);
@@ -18,7 +18,7 @@ describe('do', () => {
     // Assert
     expect(actual.exercises).toEqual([]);
   }),
-    it('should return an empty list of exercises if none were found', async () => {
+    it('Should return an empty list of exercises if none were found', async () => {
       // Arrange
       const repository = mock<IExerciseRepository>();
       const exercise = new Exercise(uuidv4(), 'title', 'desc', []);

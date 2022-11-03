@@ -3,7 +3,7 @@ import { Exercise } from './exercise';
 import { Query } from './query';
 
 describe('Constructor', () => {
-  it('throws an error if the id is not a uuidv4', () => {
+  it('Throws an error if the id is not a uuidv4', () => {
     expect(() => new Exercise('asd', 'a', 'a', [])).toThrow(Error);
   }),
     it('Throws an error if the title string is empty', () => {
