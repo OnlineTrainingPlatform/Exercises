@@ -53,7 +53,7 @@ export async function exerciseController(
               reply.status(404).send();
             } else {
               // The exercise was found so we return 200 OK
-              reply.status(200).send(response);
+              reply.status(200).send(response.exercise);
             }
           })
           .catch((error) => {

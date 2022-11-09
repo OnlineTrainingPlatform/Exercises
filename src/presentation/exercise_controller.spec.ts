@@ -70,7 +70,9 @@ describe('/exercises/:id', () => {
   it('Returns status 200 if we found the exercise', async () => {
     // Arrange
     const id = uuidv4();
-    const exercise = new Exercise(id, 'title', 'description', []);
+    const exercise = new Exercise(id, 'title', 'description', [
+      new Query('A<> something.idle'),
+    ]);
 
     // Mock
     repository.getExerciseById.mockResolvedValue(exercise);
@@ -81,7 +83,13 @@ describe('/exercises/:id', () => {
 
     // Assert
     expect(response.statusCode).toBe(200);
-    expect(payload.exercise).toEqual(exercise);
+    expect(typeof payload).toBe('object');
+    expect(typeof payload).toBe('object');
+    expect(typeof payload.id).toBe('string');
+    expect(typeof payload.title).toBe('string');
+    expect(typeof payload.description).toBe('string');
+    expect(Array.isArray(payload.queries)).toBe(true);
+    expect(typeof payload.queries[0].query).toBe('string');
   }),
     it('Returns status 400 if no id was given', async () => {
       // Act
