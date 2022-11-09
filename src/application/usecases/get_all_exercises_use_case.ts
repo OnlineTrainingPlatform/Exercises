@@ -6,12 +6,12 @@ export interface IGetAllExercisesRequest {}
 
 export interface IGetAllExercisesResponse {
   exercises: {
-    id: string,
-    title: string,
-    description: string,
+    id: string;
+    title: string;
+    description: string;
     queries: {
-      query: string
-    }[]
+      query: string;
+    }[];
   }[];
 }
 
@@ -28,15 +28,15 @@ export class GetAllExercisesUseCase
     _: IGetAllExercisesRequest,
   ): Promise<IGetAllExercisesResponse> {
     return {
-      exercises: (await this.repository.getExercises()).map(exercise => {
+      exercises: (await this.repository.getExercises()).map((exercise) => {
         return {
           id: exercise.id,
           title: exercise.title,
           description: exercise.description,
-          queries: exercise.queries.map(query => {
-            return { query: query.query }
-          })
-        }
+          queries: exercise.queries.map((query) => {
+            return { query: query.query };
+          }),
+        };
       }),
     };
   }

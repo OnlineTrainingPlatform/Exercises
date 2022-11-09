@@ -3,10 +3,7 @@ import { mock } from 'jest-mock-extended';
 import { exerciseController } from './exercise_controller';
 import { Exercise, IExerciseRepository, Query } from '../domain';
 import { v4 as uuidv4 } from 'uuid';
-import {
-  IGetAnExerciseResponse,
-  IGetAllExercisesResponse,
-} from '../application';
+import { IGetAnExerciseResponse } from '../application';
 
 describe('/exercises', () => {
   const server = fastify();
@@ -17,7 +14,9 @@ describe('/exercises', () => {
 
   it('Returns status 200 if we successfully get exercises', async () => {
     // Arrange
-    const exercise = new Exercise(uuidv4(), 'title', 'description', [new Query("A<> something.idle")]);
+    const exercise = new Exercise(uuidv4(), 'title', 'description', [
+      new Query('A<> something.idle'),
+    ]);
     const exercises = [exercise];
 
     // Mock
@@ -30,12 +29,12 @@ describe('/exercises', () => {
     // Assert
     expect(response.statusCode).toBe(200);
     expect(Array.isArray(payload)).toBe(true);
-    expect(typeof payload[0]).toBe("object");
-    expect(typeof payload[0].id).toBe("string");
-    expect(typeof payload[0].title).toBe("string");
-    expect(typeof payload[0].description).toBe("string");
+    expect(typeof payload[0]).toBe('object');
+    expect(typeof payload[0].id).toBe('string');
+    expect(typeof payload[0].title).toBe('string');
+    expect(typeof payload[0].description).toBe('string');
     expect(Array.isArray(payload[0].queries)).toBe(true);
-    expect(typeof payload[0].queries[0].query).toBe("string")
+    expect(typeof payload[0].queries[0].query).toBe('string');
   }),
     it('Returns status 500 if an error is thrown by the repository', async () => {
       // Mock
@@ -78,7 +77,7 @@ describe('/exercises/:id', () => {
 
     // Act
     const response = await server.inject(`/exercises/${id}`);
-    const payload = JSON.parse(response.payload) as IGetAnExerciseResponse;
+    const payload = JSON.parse(response.payload);
 
     // Assert
     expect(response.statusCode).toBe(200);

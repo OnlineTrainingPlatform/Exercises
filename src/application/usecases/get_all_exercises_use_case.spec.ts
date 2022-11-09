@@ -28,11 +28,11 @@ describe('do', () => {
           id: exercise.id,
           title: exercise.title,
           description: exercise.description,
-          queries: exercise.queries.map(query => {
-            return { query: query.query }
-          })
-        }
-      ]
+          queries: exercise.queries.map((query) => {
+            return { query: query.query };
+          }),
+        },
+      ];
 
       // Mock
       repository.getExercises.mockResolvedValue([exercise]);
