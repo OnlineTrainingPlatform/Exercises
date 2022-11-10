@@ -6,12 +6,14 @@ import * as dotenv from 'dotenv';
 // Load the ".env" file from the root. Afterwards check all required environment bindings
 const envResult = dotenv.config();
 if (envResult.error != undefined) {
-  console.log(`Warning: dotenv failed parsing the .env file ${envResult.error!}`);
+  console.log(
+    `Warning: dotenv failed parsing the .env file ${envResult.error!}`,
+  );
 }
 
 if (process.env.HOST == undefined) {
-  console.log("Missing environment variable 'HOST' defaulting to 'localhost'")
-  process.env.HOST = 'localhost'
+  console.log("Missing environment variable 'HOST' defaulting to 'localhost'");
+  process.env.HOST = 'localhost';
 }
 
 if (process.env.API_PREFIX == undefined) {
@@ -55,10 +57,13 @@ server.register(statusController, {
   prefix: process.env.API_PREFIX,
 });
 
-server.listen({ port: Number(process.env.PORT), host: process.env.HOST }, (err: any, address: any) => {
-  if (err) {
-    console.error(err);
-    process.exit(1);
-  }
-  console.log(`Server listening at ${address}`);
-});
+server.listen(
+  { port: Number(process.env.PORT), host: process.env.HOST },
+  (err: any, address: any) => {
+    if (err) {
+      console.error(err);
+      process.exit(1);
+    }
+    console.log(`Server listening at ${address}`);
+  },
+);
