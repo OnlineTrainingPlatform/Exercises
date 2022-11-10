@@ -9,6 +9,11 @@ if (envResult.error != undefined) {
   console.log(`Warning: dotenv failed parsing the .env file ${envResult.error!}`);
 }
 
+if (process.env.HOST == undefined) {
+  console.log("Missing environment variable 'HOST' defaulting to 'localhost'")
+  process.env.HOST = 'localhost'
+}
+
 if (process.env.API_PREFIX == undefined) {
   console.log("Missing environment variable 'API_PREFIX'");
   process.exit(1);
@@ -50,7 +55,7 @@ server.register(statusController, {
   prefix: process.env.API_PREFIX,
 });
 
-server.listen({ port: Number(process.env.PORT) }, (err: any, address: any) => {
+server.listen({ port: Number(process.env.PORT), host: process.env.HOST }, (err: any, address: any) => {
   if (err) {
     console.error(err);
     process.exit(1);
