@@ -6,8 +6,7 @@ import * as dotenv from 'dotenv';
 // Load the ".env" file from the root. Afterwards check all required environment bindings
 const envResult = dotenv.config();
 if (envResult.error != undefined) {
-  console.log(`dotenv failed parsing the .env file ${envResult.error!}`);
-  process.exit(1);
+  console.log(`Warning: dotenv failed parsing the .env file ${envResult.error!}`);
 }
 
 if (process.env.API_PREFIX == undefined) {
