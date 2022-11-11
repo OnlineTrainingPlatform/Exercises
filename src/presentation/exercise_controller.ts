@@ -16,13 +16,13 @@ export async function exerciseController(
         const user = new User(opts.exerciseRepository);
         await user
           .getExercises({})
+          .then((resolve: IGetAllExercisesResponse) => {
+            // Promise resolved with a response
+            reply.status(200).send(resolve.exercises);
+          })
           .catch((error) => {
             // Promise rejected or an exception was thrown
             reply.status(500).send(error);
-          })
-          .then((resolve: void | IGetAllExercisesResponse) => {
-            // Promise resolved with a response
-            reply.status(200).send(resolve);
           });
       } catch (error) {
         // Other than getExercises might cause an exception
@@ -45,11 +45,7 @@ export async function exerciseController(
 
         await user
           .getExercise({ id })
-          .catch((error) => {
-            // Promise was rejected or an exception was thrown
-            reply.status(500).send(error);
-          })
-          .then((resolve: void | IGetAnExerciseResponse) => {
+          .then((resolve: IGetAnExerciseResponse) => {
             const response = resolve as IGetAnExerciseResponse;
 
             if (response.exercise == undefined) {
@@ -57,8 +53,12 @@ export async function exerciseController(
               reply.status(404).send();
             } else {
               // The exercise was found so we return 200 OK
-              reply.status(200).send(response);
+              reply.status(200).send(response.exercise);
             }
+          })
+          .catch((error) => {
+            // Promise was rejected or an exception was thrown
+            reply.status(500).send(error);
           });
       } catch (error) {
         // Other than getExercise might cause an exception
