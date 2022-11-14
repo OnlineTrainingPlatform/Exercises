@@ -50,13 +50,6 @@ export class MongoExerciseRepository implements IExerciseRepository {
       dbName: database_name || 'exercises',
       autoCreate: true,
     });
-
-    new this.exerciseModel({
-      id: v4(),
-      title: 'Title',
-      description: 'Description',
-      queries: [{ query: 'A<>  Something.Idle' }],
-    }).save();
   }
 
   private documentToExercise(model: IExerciseDocument): Exercise {
