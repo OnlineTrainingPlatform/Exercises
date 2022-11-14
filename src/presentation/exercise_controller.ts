@@ -1,9 +1,5 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import { User } from '../application/actors';
-import {
-  IGetAnExerciseResponse,
-  IGetAllExercisesResponse,
-} from '../application/usecases';
 
 export async function exerciseController(
   fastify: FastifyInstance,
@@ -14,16 +10,8 @@ export async function exerciseController(
     async (request: FastifyRequest, reply: FastifyReply) => {
       try {
         const user = new User(opts.exerciseRepository);
-        await user
-          .getExercises({})
-          .then((resolve: IGetAllExercisesResponse) => {
-            // Promise resolved with a response
-            reply.status(200).send(resolve.exercises);
-          })
-          .catch((error) => {
-            // Promise rejected or an exception was thrown
-            reply.status(500).send(error);
-          });
+        const response = await user.getExercises({});
+        reply.status(200).send(response.exercises);
       } catch (error) {
         // Other than getExercises might cause an exception
         reply.status(500).send();
@@ -43,23 +31,14 @@ export async function exerciseController(
           return;
         }
 
-        await user
-          .getExercise({ id })
-          .then((resolve: IGetAnExerciseResponse) => {
-            const response = resolve as IGetAnExerciseResponse;
-
-            if (response.exercise == undefined) {
-              // Repository returned undefined which means that the exercise could not be found
-              reply.status(404).send();
-            } else {
-              // The exercise was found so we return 200 OK
-              reply.status(200).send(response.exercise);
-            }
-          })
-          .catch((error) => {
-            // Promise was rejected or an exception was thrown
-            reply.status(500).send(error);
-          });
+        const response = await user.getExercise({ id });
+        if (response.exercise == undefined) {
+          // Repository returned undefined which means that the exercise could not be found
+          reply.status(404).send();
+        } else {
+          // The exercise was found so we return 200 OK
+          reply.status(200).send(response.exercise);
+        }
       } catch (error) {
         // Other than getExercise might cause an exception
         reply.status(500).send();
