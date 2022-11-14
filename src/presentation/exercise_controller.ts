@@ -10,7 +10,7 @@ export async function exerciseController(
     async (request: FastifyRequest, reply: FastifyReply) => {
       try {
         const user = new User(opts.exerciseRepository);
-        const response  = await user.getExercises({})
+        const response = await user.getExercises({});
         reply.status(200).send(response.exercises);
       } catch (error) {
         // Other than getExercises might cause an exception
@@ -31,7 +31,7 @@ export async function exerciseController(
           return;
         }
 
-        const response = await user.getExercise({ id })
+        const response = await user.getExercise({ id });
         if (response.exercise == undefined) {
           // Repository returned undefined which means that the exercise could not be found
           reply.status(404).send();
