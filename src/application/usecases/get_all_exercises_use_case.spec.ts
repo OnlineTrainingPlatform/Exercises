@@ -23,6 +23,16 @@ describe('do', () => {
       const repository = mock<IExerciseRepository>();
       const exercise = new Exercise(uuidv4(), 'title', 'desc', []);
       const exercisesUseCase = new GetAllExercisesUseCase(repository);
+      const expected = [
+        {
+          id: exercise.id,
+          title: exercise.title,
+          description: exercise.description,
+          queries: exercise.queries.map((query) => {
+            return { query: query.query };
+          }),
+        },
+      ];
 
       // Mock
       repository.getExercises.mockResolvedValue([exercise]);
@@ -31,6 +41,6 @@ describe('do', () => {
       const actual = await exercisesUseCase.do({});
 
       // Assert
-      expect(actual.exercises).toEqual([exercise]);
+      expect(actual.exercises).toEqual(expected);
     });
 });

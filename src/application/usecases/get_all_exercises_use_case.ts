@@ -5,7 +5,14 @@ import { IUseCase } from './i_use_case';
 export interface IGetAllExercisesRequest {}
 
 export interface IGetAllExercisesResponse {
-  exercises: Exercise[];
+  exercises: {
+    id: string;
+    title: string;
+    description: string;
+    queries: {
+      query: string;
+    }[];
+  }[];
 }
 
 export class GetAllExercisesUseCase
@@ -21,7 +28,16 @@ export class GetAllExercisesUseCase
     _: IGetAllExercisesRequest,
   ): Promise<IGetAllExercisesResponse> {
     return {
-      exercises: await this.repository.getExercises(),
+      exercises: (await this.repository.getExercises()).map((exercise) => {
+        return {
+          id: exercise.id,
+          title: exercise.title,
+          description: exercise.description,
+          queries: exercise.queries.map((query) => {
+            return { query: query.query };
+          }),
+        };
+      }),
     };
   }
 }

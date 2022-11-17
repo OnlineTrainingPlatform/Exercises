@@ -6,7 +6,16 @@ export interface IGetAnExerciseRequest {
 }
 
 export interface IGetAnExerciseResponse {
-  exercise: Exercise | undefined;
+  exercise:
+    | {
+        id: string;
+        title: string;
+        description: string;
+        queries: {
+          query: string;
+        }[];
+      }
+    | undefined;
 }
 
 export class GetAnExerciseUseCase
@@ -21,8 +30,20 @@ export class GetAnExerciseUseCase
   public async do(
     request: IGetAnExerciseRequest,
   ): Promise<IGetAnExerciseResponse> {
+    const exercise = await this.repository.getExerciseById(request.id);
+    if (exercise === undefined) {
+      return { exercise: undefined };
+    }
+
     return {
-      exercise: await this.repository.getExerciseById(request.id),
+      exercise: {
+        id: exercise.id,
+        title: exercise.title,
+        description: exercise.description,
+        queries: exercise.queries.map((query) => {
+          return { query: query.query };
+        }),
+      },
     };
   }
 }

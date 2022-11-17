@@ -30,11 +30,10 @@ var fastify_1 = __importDefault(require("fastify"));
 var infrastructure_1 = require("./infrastructure");
 var presentation_1 = require("./presentation");
 var dotenv = __importStar(require("dotenv"));
-// Load the ".env" fiel from the root. Afterwards check all required environment bindings
+// Load the ".env" file from the root. Afterwards check all required environment bindings
 var envResult = dotenv.config();
 if (envResult.error != undefined) {
-    console.log("dotenv failed parsing the .env file ".concat(envResult.error));
-    process.exit(1);
+    console.log("Warning: dotenv failed parsing the .env file ".concat(envResult.error));
 }
 if (process.env.API_PREFIX == undefined) {
     console.log("Missing environment variable 'API_PREFIX'");
@@ -66,7 +65,7 @@ server.register(presentation_1.exerciseController, {
 server.register(presentation_1.statusController, {
     prefix: process.env.API_PREFIX,
 });
-server.listen({ port: Number(process.env.PORT) }, function (err, address) {
+server.listen({ port: Number(process.env.PORT), host: '0.0.0.0' }, function (err, address) {
     if (err) {
         console.error(err);
         process.exit(1);
