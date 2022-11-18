@@ -13,6 +13,7 @@ export async function exerciseController(
         const response = await user.getExercises({});
         reply.status(200).send(response.exercises);
       } catch (error) {
+        console.log(error);
         // Other than getExercises might cause an exception
         reply.status(500).send();
       }
@@ -40,6 +41,7 @@ export async function exerciseController(
           reply.status(200).send(response.exercise);
         }
       } catch (error) {
+        console.log(error);
         // Other than getExercise might cause an exception
         reply.status(500).send();
       }
