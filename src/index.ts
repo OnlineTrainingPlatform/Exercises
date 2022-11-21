@@ -41,7 +41,7 @@ if (process.env.PORT == undefined) {
   process.exit(1);
 }
 
-const server = fastify();
+const server = fastify({ logger: true });
 
 // Register the controllers
 server.register(exerciseController, {
